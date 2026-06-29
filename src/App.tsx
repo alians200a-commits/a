@@ -108,7 +108,7 @@ export default function App() {
           setState(prev => {
             const sanitized: QuizState = {
               currentScreen: (parsed.currentScreen === "home" || parsed.currentScreen === "practice" || parsed.currentScreen === "results") ? parsed.currentScreen : "home",
-              currentIndex: typeof parsed.currentIndex === "number" ? parsed.currentIndex : 0,
+              currentIndex: (typeof parsed.currentIndex === "number" && parsed.currentIndex >= 0 && parsed.currentIndex < QUESTIONS_DATA.length) ? parsed.currentIndex : 0,
               answers: (parsed.answers && typeof parsed.answers === "object") ? parsed.answers : {},
               shownAnswers: (parsed.shownAnswers && typeof parsed.shownAnswers === "object") ? parsed.shownAnswers : {},
               ratings: (parsed.ratings && typeof parsed.ratings === "object") ? parsed.ratings : {},
@@ -218,14 +218,14 @@ export default function App() {
 
     if (filtered.length > 0) {
       const currentQ = QUESTIONS_DATA[state.currentIndex];
-      const idx = filtered.findIndex(q => q.id === currentQ.id);
+      const idx = currentQ ? filtered.findIndex(q => q.id === currentQ.id) : -1;
       if (idx === -1) {
         // Find index of first filtered question in original array
         const origIndex = QUESTIONS_DATA.findIndex(q => q.id === filtered[0].id);
-        return origIndex;
+        return origIndex >= 0 ? origIndex : 0;
       }
     }
-    return state.currentIndex;
+    return typeof state.currentIndex === "number" && state.currentIndex >= 0 && state.currentIndex < QUESTIONS_DATA.length ? state.currentIndex : 0;
   };
 
   const handleFilterChange = (newFilter: "all" | "unanswered" | "unrated" | "needs_review" | "not_mastered" | "mastered") => {
