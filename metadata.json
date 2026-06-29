@@ -1,0 +1,6 @@
+{
+  "name": "الأسئلة الوزارية حول أسماء الاستفهام (المجموعة الثانية)",
+  "description": "تطبيق تفاعلي للتقييم الذاتي في قواعد اللغة العربية والأسئلة الوزارية والاعرابات الخاصة لصف السادس الإعدادي.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
